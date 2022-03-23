@@ -10,9 +10,10 @@ export default class PriceCard extends React.Component {
         EUR: 0,
       },
     };
+    this.getPrice = this.getPrice.bind(this);
   }
 
-  componentDidMount() {
+  getPrice() {
     fetch(
       "https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,JPY,EUR&api_key=413682da60752fe450873bcbce6b3a81d72443d5e64e8ea3e58d274442d0b3bf"
     )
@@ -31,6 +32,12 @@ export default class PriceCard extends React.Component {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  componentWillUnmount() {
+    setInterval(() => {
+      this.getPrice();
+    }, 30000);
   }
 
   render() {
